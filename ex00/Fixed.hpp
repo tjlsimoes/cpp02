@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:04:01 by tjorge-l          #+#    #+#             */
-/*   Updated: 2025/05/09 17:04:02 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:56:01 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ class Fixed
 		~Fixed(void);							// Canonical: Destructor
 	
 	Fixed & operator=(Fixed const & rhs);		// Canonical: Copy Assignement Operator
-	int	getFixed(void) const;
-	int	getRawBits(void) const;
+	void	setRawBits(int const raw);
+	int		getRawBits(void) const;
 };
 
 #endif
