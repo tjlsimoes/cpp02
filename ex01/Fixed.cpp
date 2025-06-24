@@ -72,11 +72,14 @@ int	Fixed::scale()
 {
 	return (1 << Fixed::_fract_bits);
 }
+// 1 << _fract_bits is equivalent to 2^_fract_bits.
 
 float	Fixed::scaleFloat()
 {
 	return (static_cast<float>(1 << Fixed::_fract_bits));
 }
+
+// _fract_bits for the fraction, and one bit for the sign → so the remaining bits are for the integer.
 
 float	Fixed::overflowMax()
 {
@@ -118,3 +121,12 @@ std::ostream & operator<<(std::ostream & o, Fixed const & rhs)
 	o << rhs.toFloat();
 	return (o);
 }
+
+
+// 1 << n  ==  2^n
+
+// Decimal:       1      => 00000001
+// 1 << 1 =       2      => 00000010
+// 1 << 2 =       4      => 00000100
+// 1 << 3 =       8      => 00001000
+// 1 << 4 =      16      => 00010000
