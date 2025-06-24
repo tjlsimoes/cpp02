@@ -30,26 +30,26 @@ Fixed::Fixed(Fixed const & src)	// Copy Constructor
 Fixed::Fixed(const int i)
 {
 	std::cout << "Int constructor called" << std::endl;
-	if (i > OVERFLOW_MAX || i < OVERFLOW_MIN)
+	if (i > Fixed::overflowMax() || i < Fixed::overflowMin() )
 	{
 		this->_fixed = 0;
 		std::cerr << "Overflow detected. Setting it to 0." << std::endl;
 		return ;
 	}
-	this->_fixed = roundf(i * SCALE);
+	this->_fixed = roundf(i * Fixed::scale());
 	return ;
 }
 
 Fixed::Fixed(const float i)
 {
 	std::cout << "Float constructor called" << std::endl;
-	if (i > OVERFLOW_MAX || i < OVERFLOW_MIN)
+	if (i > Fixed::overflowMax() || i < Fixed::overflowMin() )
 	{
 		this->_fixed = 0;
 		std::cerr << "Overflow detected. Setting it to 0." << std::endl;
 		return ;
 	}
-	this->_fixed = roundf(i * SCALE);
+	this->_fixed = roundf(i * Fixed::scale());
 	return ;
 }
 
@@ -68,14 +68,33 @@ Fixed &	Fixed::operator=(Fixed const & rhs)
 	return (*this);
 }
 
+int	Fixed::scale()
+{
+	return (1 << Fixed::_fract_bits);
+}
+
+float	Fixed::scaleFloat()
+{
+	return (static_cast<float>(1 << Fixed::_fract_bits));
+}
+
+float	Fixed::overflowMax()
+{
+	return (static_cast<float>((1 << (32 - Fixed::_fract_bits - 1)) - 1));
+}
+
+float	Fixed::overflowMin()
+{
+	return (static_cast<float>(-(1 << (32 - Fixed::_fract_bits - 1))));
+}
 float	Fixed::toFloat(void) const
 {
-	return (this->_fixed / SCALE_F);
+	return (this->_fixed / Fixed::scaleFloat());
 }
 
 int		Fixed::toInt(void) const
 {
-	return (roundf(this->_fixed / SCALE));
+	return (roundf(this->_fixed / Fixed::scale()));
 }
 // Alternative _fixed >> _fract_bits
 

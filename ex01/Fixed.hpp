@@ -14,17 +14,17 @@
 # define FIXED_HPP
 # include <iostream>
 # include <math.h>
-# define SCALE 256
-# define SCALE_F 256.0
-# define OVERFLOW_MAX 8388607
-# define OVERFLOW_MIN -8388608
 
 class Fixed
 {
 	private:
 		int					_fixed;
 		static const int	_fract_bits;
-	
+		
+		static	int	scale();
+		static	float	scaleFloat();
+		static	float	overflowMax();
+		static	float	overflowMin();
 	public:
 		Fixed(void);							// Canonical: Default Constructor
 		Fixed(Fixed const & src);				// Canonical: Copy Constructor

@@ -28,29 +28,28 @@ Fixed::Fixed(Fixed const & src)	// Copy Constructor
 Fixed::Fixed(const int i)
 {
 	std::cout << "Int constructor called" << std::endl;
-	if (i > OVERFLOW_MAX || i < OVERFLOW_MIN)
+	if (i > Fixed::overflowMax() || i < Fixed::overflowMin() )
 	{
 		this->_fixed = 0;
 		std::cerr << "Overflow detected. Setting it to 0." << std::endl;
 		return ;
 	}
-	this->_fixed = roundf(i * SCALE);
+	this->_fixed = roundf(i * Fixed::scale());
 	return ;
 }
 
 Fixed::Fixed(const float i)
 {
 	std::cout << "Float constructor called" << std::endl;
-	if (i > OVERFLOW_MAX || i < OVERFLOW_MIN)
+	if (i > Fixed::overflowMax() || i < Fixed::overflowMin() )
 	{
 		this->_fixed = 0;
 		std::cerr << "Overflow detected. Setting it to 0." << std::endl;
 		return ;
 	}
-	this->_fixed = roundf(i * SCALE);
+	this->_fixed = roundf(i * Fixed::scale());
 	return ;
 }
-
 
 Fixed::~Fixed(void)
 {
@@ -65,6 +64,36 @@ Fixed &	Fixed::operator=(Fixed const & rhs)
 		this->_fixed = rhs.getRawBits();
 	return (*this);
 }
+
+int	Fixed::scale()
+{
+	return (1 << Fixed::_fract_bits);
+}
+
+float	Fixed::scaleFloat()
+{
+	return (static_cast<float>(1 << Fixed::_fract_bits));
+}
+
+float	Fixed::overflowMax()
+{
+	return (static_cast<float>((1 << (32 - Fixed::_fract_bits - 1)) - 1));
+}
+
+float	Fixed::overflowMin()
+{
+	return (static_cast<float>(-(1 << (32 - Fixed::_fract_bits - 1))));
+}
+float	Fixed::toFloat(void) const
+{
+	return (this->_fixed / Fixed::scaleFloat());
+}
+
+int		Fixed::toInt(void) const
+{
+	return (roundf(this->_fixed / Fixed::scale()));
+}
+// Alternative _fixed >> _fract_bits
 
 bool	Fixed::operator>(Fixed const & rhs)
 {
@@ -130,7 +159,7 @@ Fixed	Fixed::operator*(Fixed const & rhs)
 {
 	Fixed	result;
 
-	result._fixed = (this->_fixed * rhs._fixed) / SCALE;
+	result._fixed = (this->_fixed * rhs._fixed) / Fixed::scale();
 	return (result);
 }
 
@@ -139,7 +168,7 @@ Fixed	Fixed::operator/(Fixed const & rhs)
 	Fixed	result;
 
 	result = *this;
-	result._fixed = (this->_fixed / rhs._fixed) * SCALE;
+	result._fixed = (this->_fixed / rhs._fixed) * Fixed::scale();
 	return (result);
 }
 
@@ -180,17 +209,6 @@ Fixed &	Fixed::operator--()
 	this->_fixed -= 1;
 	return (*this);
 }
-
-float	Fixed::toFloat(void) const
-{
-	return (this->_fixed / SCALE_F);
-}
-
-int		Fixed::toInt(void) const
-{
-	return (roundf(this->_fixed / SCALE));
-}
-// Alternative _fixed >> _fract_bits
 
 void	Fixed::setRawBits(int const raw)
 {
