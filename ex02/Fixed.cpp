@@ -103,7 +103,7 @@ bool	Fixed::operator==(Fixed const & rhs)
 
 bool	Fixed::operator!=(Fixed const & rhs)
 {
-	if (this->_fixed == rhs._fixed)
+	if (this->_fixed != rhs._fixed)
 		return (true);
 	return (false);
 }
