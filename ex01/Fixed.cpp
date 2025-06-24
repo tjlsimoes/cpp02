@@ -12,6 +12,8 @@
 
 # include "Fixed.hpp"
 
+// Instead of using hardcoded values, calculate them from _fract_bits.
+
 Fixed::Fixed(void) : _fixed(0)	// Default Constructor
 {
 	std::cout << "Default constructor called" << std::endl;
