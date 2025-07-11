@@ -177,7 +177,6 @@ Fixed	Fixed::operator++(int)
 {
 	Fixed	temp;
 
-	// Need to add safeguards?
 	temp = *this;
 	this->_fixed += 1;
 	return (temp);
@@ -186,7 +185,6 @@ Fixed	Fixed::operator++(int)
 // Prefix ++
 Fixed &	Fixed::operator++()
 {
-	// Need to add safeguards?
 	this->_fixed += 1;
 	return (*this);
 }
@@ -196,7 +194,6 @@ Fixed 	Fixed::operator--(int)
 {
 	Fixed	temp;
 
-	// Need to add safeguards?
 	temp = *this;
 	this->_fixed -= 1;
 	return (temp);
@@ -205,7 +202,6 @@ Fixed 	Fixed::operator--(int)
 // Prefix --
 Fixed &	Fixed::operator--()
 {
-	// Need to add safeguards?
 	this->_fixed -= 1;
 	return (*this);
 }

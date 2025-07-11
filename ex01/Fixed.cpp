@@ -12,8 +12,6 @@
 
 # include "Fixed.hpp"
 
-// Instead of using hardcoded values, calculate them from _fract_bits.
-
 Fixed::Fixed(void) : _fixed(0)	// Default Constructor
 {
 	std::cout << "Default constructor called" << std::endl;
@@ -130,3 +128,4 @@ std::ostream & operator<<(std::ostream & o, Fixed const & rhs)
 // 1 << 2 =       4      => 00000100
 // 1 << 3 =       8      => 00001000
 // 1 << 4 =      16      => 00010000
+// 1 << 23 = 8,388,608 = 2²³
